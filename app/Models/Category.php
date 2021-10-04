@@ -27,4 +27,14 @@ class Category extends Model
     protected $dates = [
         'created_at', 'updated_at'
     ];
+
+    protected $appends = ['imageUrl'];
+
+    public static $CategoryValidation = [
+        'name' => 'required|string|min:3',
+    ];
+
+    public function getImageUrlAttribute() {
+        return ($this->image_name != null) ? url('uploads/categories') . '/' . $this->image_name : '';
+    }
 }

@@ -24878,3 +24878,8 @@ body.search-show, body.sidebar-show {
 		margin-left:auto !important;
 	}
 }
+
+/* Custom design by Joan */
+.error {
+	color: #a6121f;
+}
