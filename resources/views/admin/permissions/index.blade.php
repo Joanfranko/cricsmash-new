@@ -46,24 +46,24 @@
     <!-- row end -->
 
     <!-- Modal Begins -->
-    <div class="modal fade" id="roles-modal" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="permissions-modal" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="roles-modal-title" id="roles-modal-title"></h5>
+                    <h5 class="permissions-modal-title" id="permissions-modal-title"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form name="roles-form" id="roles-form" enctype="multipart/form-data">
+                    <form name="permissions-form" id="permissions-form" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" class="form-control" name="role_id" id="role_id" />
+                        <input type="hidden" class="form-control" name="permission_id" id="permission_id" />
                         <div class="row">
                             <div class="col-xl-12 col-md-12 col-sm-12 col-sm-12">
                                 <div class="form-group">
                                     <label for="name" class="form-control-label">Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" />
+                                    <input type="text" class="form-control" name="name" id="name" />
                                     <label id="name-error" class="error" for="name"></label>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
     });
 
     function InitFormValidation() {
-        $("#roles-form").validate({
+        $("#permissions-form").validate({
             ignore: [],
             rules : {
                 name: {
@@ -115,7 +115,7 @@
             },
             messages: {
                 name: {
-                    required: 'Role name is required.'
+                    required: 'Permission name is required.'
                 }
             }
         });        
@@ -167,80 +167,80 @@
 
     $('.admin-grid-action-create').click(function(){
         resetFormData();
-        $('#roles-modal-title').empty();
-        $('#roles-modal-title').append('<h5 class="roles-modal-title" id="roles-modal-title">Create Role</h5>');
+        $('#permissions-modal-title').empty();
+        $('#permissions-modal-title').append('<h5 class="permissions-modal-title" id="permissions-modal-title">Create Permission</h5>');
         $('#modal_submit').empty();
-        $('#modal_submit').append('Create Role');
-        $('#roles-modal').modal('show');
+        $('#modal_submit').append('Create Permission');
+        $('#permissions-modal').modal('show');
     });
     $('#modal_cancel').click(function(){
-        $('#roles-modal').modal('hide');
+        $('#permissions-modal').modal('hide');
     });
     $('#modal_submit').click(function() {
-        if(!$('#roles-form').valid()) {
+        if(!$('#permissions-form').valid()) {
             return false;
         }
         var doAjax_params_default = {};
-        if($('#role_id').val() != '') {
+        if($('#permission_id').val() != '') {
             doAjax_params_default = {
-                'url': '{{ url('admin/role/') }}' + '/update/' + $('#role_id').val(),
+                'url': '{{ url('admin/permission') }}' + '/update/' + $('#permission_id').val(),
                 'requestType': 'PUT',
                 'data': getFormData(),
-                'successCallbackFunction': 'updateRole',
+                'successCallbackFunction': 'updatePermission',
             }
         } else {
             doAjax_params_default = {
-                'url': '{{ route('admin.roles.create') }}',
+                'url': '{{ route('admin.permissions.create') }}',
                 'requestType': 'POST',
                 'data': getFormData(),
-                'successCallbackFunction': 'createRole',
+                'successCallbackFunction': 'createPermission',
             }
         }
         doAjaxCall(doAjax_params_default);
     });
 
-    function createRole(status, data, message) {
+    function createPermission(status, data, message) {
         if(!status) {
             ShowValidationErrorOnModal(data);
             return false;
         }
-        $('#roles-modal').modal('hide');
-        showAlert('success', title = 'Success', 'Role Created Successfully..!');
+        $('#permissions-modal').modal('hide');
+        showAlert('success', title = 'Success', 'Permission Created Successfully..!');
         $('#DataGrid').dataTable().api().ajax.reload();
     }
 
-    function updateRole (status, data, message) {
+    function updatePermission (status, data, message) {
         if(!status) {
             ShowValidationErrorOnModal(data);
             return false;
         }
-        $('#roles-modal').modal('hide');
-        showAlert('success', title = 'Success', 'Role Updated Successfully..!');
+        $('#permissions-modal').modal('hide');
+        showAlert('success', title = 'Success', 'Permission Updated Successfully..!');
         $('#DataGrid').dataTable().api().ajax.reload();
     }
 
     function editRecord(id) {
         resetFormData();
-        $('#roles-model-title').empty();
-        $('#roles-model-title').append('<h5 class="roles-model-title" id="roles-modal-title">Edit Role</h5>');
+        $('#permissions-modal-title').empty();
+        $('#permissions-modal-title').append('<h5 class="permissions-modal-title" id="permissions-modal-title">Edit Permission</h5>');
         $('#modal_submit').empty();
-        $('#modal_submit').append('Update Role');
+        $('#modal_submit').append('Update Permission');
         var doAjax_params_default = {
-            'url': '{{ url('admin/role') }}' + '/edit/' + id,
+            'url': '{{ url('admin/permission') }}' + '/edit/' + id,
             'requestType': "GET",
-            'successCallbackFunction': 'fillRoleData'
+            'successCallbackFunction': 'fillPermissionData'
         };
         doAjaxCall(doAjax_params_default);
     }
 
-    function fillRoleData(status, data, message) {
+    function fillPermissionData(status, data, message) {
         if(!status) {
             showAlert('warning', title = 'Warning', (message.length > 0 ? message : 'Some error occured!'));
             return false;
         }
         setFormData(data);
-        $("#modal-title h5").text("Edit Role");
-        $('#roles-modal').modal('show');
+        $("#modal-title h5").text("Edit Permission");
+        $('#permissions-modal').modal('show');
     }
 
     function deleteRecord(id){        
@@ -249,37 +249,37 @@
 
     function confirmedDeleteAction(id) {
         var doAjax_params_default = {
-            'url': '{{ url('admin/role/') }}' + '/delete/' + id,
+            'url': '{{ url('admin/permission') }}' + '/delete/' + id,
             'requestType': "DELETE",
-            'successCallbackFunction': 'deleteRoleData'
+            'successCallbackFunction': 'deletePermission'
         }
         doAjaxCall(doAjax_params_default);
     }
 
-    function deleteRoleData(status, data, message) {
+    function deletePermission(status, data, message) {
         if(!status) {
             showAlert('warning', title = 'Warning', (message.length > 0 ? message : 'Some error occured'));
             return false;
         }
-        showAlert('success', title = 'Success', 'Role Deleted Successfully..!');
+        showAlert('success', title = 'Success', 'Permission Deleted Successfully..!');
         $('#DataGrid').dataTable().api().ajax.reload();
     }
 
     function resetFormData() {
-        $('#role_id').val('');
+        $('#permission_id').val('');
         $('#name').val('');
 
         // To reset form validations
-        $('#roles-form').validate().resetForm();
+        $('#permissions-form').validate().resetForm();
     }
 
     function setFormData(data) {
-        $('#role_id').val(data.id);
+        $('#permission_id').val(data.id);
         $('#name').val(data.display_name);
     }
 
     function getFormData() {
-        var data = { role_id: $('#role_id').val(), name: $('#name').val() }
+        var data = { permission_id: $('#permission_id').val(), name: $('#name').val() }
         return data; 
     }
 

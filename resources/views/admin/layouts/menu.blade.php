@@ -4,7 +4,10 @@
         <nav class="horizontalMenu clearfix">
             <ul class="horizontalMenu-list">
                 <li aria-haspopup="true"><a href="{{ route('admin.dashboard') }}" class="sub-icon @if(Route::current()->getName() == 'admin.dashboard') active @endif"> Dashboard </a></li>
-                @role('SuperAdmin')<li aria-haspopup="true"><a href="{{ route('admin.roles') }}" class="sub-icon @if(Route::current()->getName() == 'admin.roles') active @endif"> Roles </a></li> @endrole
+                @role('SuperAdmin')
+                    <li aria-haspopup="true"><a href="{{ route('admin.roles') }}" class="sub-icon @if(Route::current()->getName() == 'admin.roles') active @endif"> Roles </a></li> 
+                    <li aria-haspopup="true"><a href="{{ route('admin.permissions') }}" class="sub-icon @if(Route::current()->getName() == 'admin.permissions') active @endif"> Permissions </a></li>
+                @endrole
                 <li aria-haspopup="true"><a href="{{ route('admin.category') }}" class="sub-icon @if(Route::current()->getName() == 'admin.category') active @endif"> Category </a></li>
             </ul>
         </nav>
