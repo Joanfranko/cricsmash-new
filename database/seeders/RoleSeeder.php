@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class RoleSeeder extends Seeder
 {
@@ -24,61 +25,72 @@ class RoleSeeder extends Seeder
         
         /* Roles */
         DB::table('roles')->insert([
-            'name' => 'Super Admin',
-            'guard_name' => 'web',            
-            'created_at'=>date('Y-m-d H:i:s')
+            'name' => 'SuperAdmin',
+            'display_name' => 'Super Admin',
+            'guard_name' => 'web',
+            'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
         DB::table('roles')->insert([
             'name' => 'Admin',
-            'guard_name' => 'web',            
-            'created_at'=>date('Y-m-d H:i:s')
+            'display_name' => 'Admin',
+            'guard_name' => 'web',
+            'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
         DB::table('roles')->insert([
             'name' => 'User',
-            'guard_name' => 'web',            
-            'created_at'=>date('Y-m-d H:i:s')
+            'display_name' => 'User',
+            'guard_name' => 'web',
+            'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
         DB::table('roles')->insert([
-            'name' => 'View Category',
-            'guard_name' => 'web',            
-            'created_at'=>date('Y-m-d H:i:s')
+            'name' => 'ViewCategory',
+            'display_name' => 'View Category',
+            'guard_name' => 'web',
+            'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
         DB::table('roles')->insert([
-            'name' => 'Create Category',
-            'guard_name' => 'web',            
-            'created_at'=>date('Y-m-d H:i:s')
+            'name' => 'CreateCategory',
+            'display_name' => 'Create Category',
+            'guard_name' => 'web',
+            'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
         DB::table('roles')->insert([
-            'name' => 'Edit Category',
-            'guard_name' => 'web',            
-            'created_at'=>date('Y-m-d H:i:s')
+            'name' => 'EditCategory',
+            'display_name' => 'Edit Category',
+            'guard_name' => 'web',
+            'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
         DB::table('roles')->insert([
-            'name' => 'Delete Category',
-            'guard_name' => 'web',            
-            'created_at'=>date('Y-m-d H:i:s')
+            'name' => 'DeleteCategory',
+            'display_name' => 'Delete Category',
+            'guard_name' => 'web',
+            'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
 
         /* Permissions */
         DB::table('permissions')->insert([
-            'name' => 'View Category',
-            'guard_name' => 'web',            
-            'created_at'=>date('Y-m-d H:i:s')
+            'name' => 'ViewCategory',
+            'display_name' => 'View Category',
+            'guard_name' => 'web',
+            'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
         DB::table('permissions')->insert([
-            'name' => 'Create Category',
-            'guard_name' => 'web',            
-            'created_at'=>date('Y-m-d H:i:s')
+            'name' => 'CreateCategory',
+            'display_name' => 'Create Category',
+            'guard_name' => 'web',
+            'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
         DB::table('permissions')->insert([
-            'name' => 'Edit Category',
-            'guard_name' => 'web',            
-            'created_at'=>date('Y-m-d H:i:s')
+            'name' => 'EditCategory',
+            'display_name' => 'Edit Category',
+            'guard_name' => 'web',
+            'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
         DB::table('permissions')->insert([
-            'name' => 'Delete Category',
-            'guard_name' => 'web',            
-            'created_at'=>date('Y-m-d H:i:s')
+            'name' => 'DeleteCategory',
+            'display_name' => 'Delete Category',
+            'guard_name' => 'web',
+            'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
 
         /* Role has Permissions */
@@ -90,44 +102,30 @@ class RoleSeeder extends Seeder
         /* Model has Roles */
         DB::table('model_has_roles')->insert([
             'role_id' => '1',
-            'model_type' => 'App\Models\User',            
-            'model_id'=> '1'
-        ]);
-        DB::table('model_has_roles')->insert([
-            'role_id' => '4',
-            'model_type' => 'App\Models\User',            
+            'model_type' => 'App\Models\User',
             'model_id'=> '1'
         ]);
         DB::table('model_has_roles')->insert([
             'role_id' => '2',
-            'model_type' => 'App\Models\User',            
+            'model_type' => 'App\Models\User',
             'model_id'=> '2'
         ]);
         DB::table('model_has_roles')->insert([
             'role_id' => '4',
-            'model_type' => 'App\Models\User',            
+            'model_type' => 'App\Models\User',
             'model_id'=> '2'
         ]);
 
         /* Role has permissions */
+        
         DB::table('model_has_permissions')->insert([
             'permission_id' => 1,
-            'model_type' => 'App\Models\User',            
-            'model_id'=> 1,
-        ]);
-        DB::table('model_has_permissions')->insert([
-            'permission_id' => 2,
-            'model_type' => 'App\Models\User',            
-            'model_id'=> 1,
+            'model_type' => 'App\Models\User',
+            'model_id'=> 2,
         ]);
         DB::table('model_has_permissions')->insert([
             'permission_id' => 3,
-            'model_type' => 'App\Models\User',            
-            'model_id'=> 1,
-        ]);
-        DB::table('model_has_permissions')->insert([
-            'permission_id' => 1,
-            'model_type' => 'App\Models\User',            
+            'model_type' => 'App\Models\User',
             'model_id'=> 2,
         ]);
     }
