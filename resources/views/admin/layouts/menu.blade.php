@@ -4,7 +4,7 @@
         <nav class="horizontalMenu clearfix">
             <ul class="horizontalMenu-list">
                 <li aria-haspopup="true"><a href="{{ route('admin.dashboard') }}" class="sub-icon @if(Route::current()->getName() == 'admin.dashboard') active @endif"> Dashboard </a></li>
-                <li aria-haspopup="true"><a href="#" class="sub-icon"> Category </a></li>
+                <li aria-haspopup="true"><a href="{{ route('admin.category') }}" class="sub-icon @if(Route::current()->getName() == 'admin.category') active @endif"> Category </a></li>
             </ul>
         </nav>
         <!--Nav end -->

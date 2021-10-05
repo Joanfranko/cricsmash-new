@@ -32,6 +32,9 @@
 		<link href="{{ asset('assets/plugins/horizontal-menu/dropdown-effects/fade-down.css') }}" rel="stylesheet">
 		<link href="{{ asset('assets/plugins/horizontal-menu/horizontalmenu.css') }}" rel="stylesheet">
 
+		<!-- Sidemenu css -->
+		<link href="{{ asset('assets/plugins/toggle-sidebar/sidemenu.css') }}" rel="stylesheet" />
+
 		<!--Daterangepicker css-->
 		<link href="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
 
@@ -43,6 +46,9 @@
 
 		<!-- Owl Theme css-->
 		<link href="{{ asset('assets/plugins/owl-carousel/owl.carousel.css') }}" rel="stylesheet">
+
+		<!---Sweetalert Css-->
+		<link href="{{ asset('assets/plugins/sweet-alert/sweetalert.css') }}" rel="stylesheet" />
 
 		<!---Font icons css-->
 		<link href="{{ asset('assets/plugins/iconfonts/plugin.css') }}" rel="stylesheet" />
@@ -108,6 +114,9 @@
 		<!-- Horizontal-menu js -->
 		<script src="{{ asset('assets/plugins/horizontal-menu/horizontalmenu.js') }}"></script>
 
+		<!--Side-menu js-->
+		<script src="{{ asset('assets/plugins/toggle-sidebar/sidemenu.js') }}"></script>
+
 		<!-- Sidebar Accordions js -->
 		<script src="{{ asset('assets/plugins/accordion1/js/easyResponsiveTabs.js') }}"></script>
 
@@ -121,12 +130,15 @@
 		<!-- Rightsidebar js -->
 		<script src="{{ asset('assets/plugins/sidebar/sidebar.js') }}"></script>
 
+		<!--Sweet Alert2 -->
+		<script src="{{ asset('assets/plugins/sweet-alert/sweetalert.min.js') }}"></script>
+
 		<!--begin::Page Scripts -->
 		@stack('page-level-scripts')
 		<!--end::Page Scripts -->
 
 		<!-- Custom js-->
-		{{-- <script src="{{ asset('assets/js/custom.js') }}"></script> --}}
+		<script src="{{ asset('js/common.js') }}"></script>
 
 		@stack('manual-scripts')
 	</body>

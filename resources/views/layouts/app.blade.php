@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="header-brand" href="{{ route('home') }}">
-                    <img src="{{ asset('assets/images/brand/logo.png') }}" class="header-brand-img main-logo" alt="Hogo logo">
+                    <img src="{{ asset('assets/images/brand/cricsmash-logo.png') }}" class="header-brand-img main-logo" alt="Hogo logo" style="height: 2.5rem;">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
