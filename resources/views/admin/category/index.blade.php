@@ -18,7 +18,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">{{ $moduleName }}</div>
-                    @can('Create Category')
+                    @can('CreateCategory')
                         <div class="card-options">
                             <button type="button" class="admin-grid-action-create btn btn-outline-primary"><i class="fe fe-plus mr-2"></i> Add</button>
                         </div>
@@ -179,12 +179,12 @@
                     title: "Actions",
                     orderable: !1,
                     render: function(a, e, t, n) {
-                        @if(auth()->user()->can('Edit Category') && auth()->user()->can('Delete Category'))
+                        @if(auth()->user()->can('EditCategory') && auth()->user()->can('DeleteCategory'))
                             return '<button type="button" title="Edit" onclick="editRecord(' + t.id + ')" class="btn btn-icon btn-warning btn-sm p-0"><i class="fa fa-edit"></i></button> ' +
                                 '<button type="button" id="btn_delete" title="Delete" onclick="deleteRecord(' + t.id + ')" class="btn btn-icon btn-danger btn-sm p-0"><i class="fa fa-trash"></i></button>';
-                        @elseif(auth()->user()->can('Edit Category'))
+                        @elseif(auth()->user()->can('EditCategory'))
                             return '<button type="button" title="Edit" onclick="editRecord(' + t.id + ')" class="btn btn-icon btn-warning btn-sm p-0"><i class="fa fa-edit"></i></button> ';
-                        @elseif(auth()->user()->can('Delete Category'))
+                        @elseif(auth()->user()->can('DeleteCategory'))
                             return '<button type="button" id="btn_delete" title="Delete" onclick="deleteRecord(' + t.id + ')" class="btn btn-icon btn-danger btn-sm p-0"><i class="fa fa-trash"></i></button>';
                         @else
                             return '';

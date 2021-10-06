@@ -7,6 +7,7 @@
                 @role('SuperAdmin')
                     <li aria-haspopup="true"><a href="{{ route('admin.roles') }}" class="sub-icon @if(Route::current()->getName() == 'admin.roles') active @endif"> Roles </a></li> 
                     <li aria-haspopup="true"><a href="{{ route('admin.permissions') }}" class="sub-icon @if(Route::current()->getName() == 'admin.permissions') active @endif"> Permissions </a></li>
+                    <li aria-haspopup="true"><a href="{{ route('admin.users') }}" class="sub-icon @if(Route::current()->getName() == 'admin.users') active @endif"> Users </a></li>
                 @endrole
                 <li aria-haspopup="true"><a href="{{ route('admin.category') }}" class="sub-icon @if(Route::current()->getName() == 'admin.category') active @endif"> Category </a></li>
             </ul>

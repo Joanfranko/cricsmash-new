@@ -20,7 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'username',
+        // 'username',
         'email',
         'phone',
         'profile',
@@ -45,7 +45,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'created_at' => 'datetime:d M Y H:i:s',
+        'created_at' => 'datetime:d M Y H:i:s A',
     ];
 
     protected $dates = [

@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'role_id' => 1,
             'name' => 'Super Admin',
-            'username' => 'superadmin',
+            // 'username' => 'superadmin',
             'email' => 'superadmin@cricsmash.com',
             'password' => bcrypt('Cricsmash!@#$'),
             'remember_token' => null,
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'role_id' => 2,
             'name' => 'Admin',
-            'username' => 'admin',
+            // 'username' => 'admin',
             'email' => 'admin@cricsmash.com',
             'password' => bcrypt('Cricsmash!@#$'),
             'remember_token' => null,
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'role_id' => 3,
             'name' => 'User',
-            'username' => 'user',
+            // 'username' => 'user',
             'email' => 'user@cricsmash.com',
             'password' => bcrypt('Cricsmash!@#$'),
             'remember_token' => null,

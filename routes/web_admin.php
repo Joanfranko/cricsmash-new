@@ -20,6 +20,13 @@ Route::group(['middleware' => ['role:SuperAdmin']], function () {
     Route::get('/admin/permission/edit/{id}', [App\Http\Controllers\Admin\PermissionsController::class, 'edit'])->name('permissions.edit');
     Route::put('/admin/permission/update/{id}', [App\Http\Controllers\Admin\PermissionsController::class, 'update'])->name('permissions.update');
     Route::delete('/admin/permission/delete/{id}', [App\Http\Controllers\Admin\PermissionsController::class, 'delete'])->name('permissions.delete');
+
+    // Routes for users listing / assigning roles module
+    Route::get('/admin/user', [App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('users');
+    Route::get('/admin/user/list', [App\Http\Controllers\Admin\UserManagementController::class, 'list'])->name('users.list');
+    Route::get('/admin/user/edit/{id}', [App\Http\Controllers\Admin\UserManagementController::class, 'edit'])->name('users.edit');
+    Route::get('/admin/user/permission/{id}', [App\Http\Controllers\Admin\UserManagementController::class, 'userPermissions'])->name('userPermissions');
+    Route::post('/admin/user/permission/create/{id}', [App\Http\Controllers\Admin\UserManagementController::class, 'givePermission'])->name('givePermission');
 });
 
 // Routes for category

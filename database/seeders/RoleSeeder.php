@@ -94,10 +94,10 @@ class RoleSeeder extends Seeder
         ]);
 
         /* Role has Permissions */
-        DB::table('role_has_permissions')->insert([
+        /*DB::table('role_has_permissions')->insert([
             'permission_id' => 1,
             'role_id' => 2
-        ]);
+        ]);*/
 
         /* Model has Roles */
         DB::table('model_has_roles')->insert([
