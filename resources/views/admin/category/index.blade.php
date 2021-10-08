@@ -223,7 +223,6 @@
         $('#category-model-title').append('<h5 class="category-model-title" id="category-modal-title">Create Category</h5>');
         $('#modal_submit').empty();
         $('#modal_submit').append('Create Category');
-        $('#parent_category_id').attr('disabled', false);
         $('#category-modal').modal('show');
     });
     $('#modal_cancel').click(function(){
@@ -286,7 +285,6 @@
         $('#category-model-title').append('<h5 class="category-model-title" id="category-modal-title">Edit Category</h5>');
         $('#modal_submit').empty();
         $('#modal_submit').append('Update Category');
-        $('#parent_category_id').attr('disabled', true);
         var doAjax_params_default = {
             'url': '{{ url('admin/category') }}' + '/edit/' + id,
             'requestType': "GET",

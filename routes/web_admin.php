@@ -45,4 +45,15 @@ Route::group(['middleware' => ['permission:ViewCategory']], function () {
     });
 });
 
+// Routes for Reference
+Route::get('admin/reference', [App\Http\Controllers\Admin\ReferenceController::class, 'index'])->name('reference');
+Route::get('admin/reference/list', [App\Http\Controllers\Admin\ReferenceController::class, 'list'])->name('reference.list');
+Route::post('admin/reference/create', [App\Http\Controllers\Admin\ReferenceController::class, 'create'])->name('reference.create');
+Route::get('admin/reference/edit/{id}', [App\Http\Controllers\Admin\ReferenceController::class, 'edit'])->name('reference.edit');
+Route::put('admin/reference/update/{id}', [App\Http\Controllers\Admin\ReferenceController::class, 'update'])->name('reference.update');
+Route::delete('admin/reference/delete/{id}', [App\Http\Controllers\Admin\ReferenceController::class, 'delete'])->name('reference.delete');
+
+// Routes for News
+Route::get('admin/news/', [App\Http\Controllers\Admin\NewsController::class, 'index'])->name('news');
+Route::get('admin/news/list', [App\Http\Controllers\Admin\NewsController::class, 'list'])->name('news.list');
 ?>

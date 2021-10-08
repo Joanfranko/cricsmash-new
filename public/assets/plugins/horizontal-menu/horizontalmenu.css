@@ -93,7 +93,7 @@
     text-decoration: none;
     position: relative;
     margin: 0 1px;
-	color:#2e384d;
+	color:#fff;
 }
 .horizontalMenu>.horizontalMenu-list>li:last-child>a {
 	border-right: 0px;
@@ -1261,7 +1261,7 @@
 	
 }
 .hor-menu .horizontalMenu>.horizontalMenu-list>li>a.active{
-	color: #2e384d;
+	color: #fff;
     background: #6a9ac9;
 }
 .hor-menu .horizontalMenu>.horizontalMenu-list>li>a.active:before{
@@ -1285,7 +1285,7 @@
     bottom: 0;
 }
 .hor-menu .horizontalMenu>.horizontalMenu-list>li>a:hover{
-	color:  #2e384d;
+	color:  #fff;
 	background:#6a9ac9;
 }
 .hor-menu{
