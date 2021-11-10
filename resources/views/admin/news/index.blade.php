@@ -61,7 +61,7 @@
                 <div class="modal-body">
                     <form name="news-form" id="news-form" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" class="form-control" name="    " id="user_id" />
+                        <input type="hidden" class="form-control" name="news_id" id="news_id" />
                         <div class="row">
                             <div class="col-xl-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
@@ -104,13 +104,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-xl-6 col-md-6 col-sm-12 col-sm-12">
                                 <div class="form-group">
                                     <label for="image_video" class="form-control-label">Image / Video <span class="text-danger">*</span></label>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="image_video">
-                                        <label class="custom-file-label">Choose file</label>
-                                    </div>
+                                    <input type="file" class="form-control" name="image_video" id="image_video" />
                                 </div>
                             </div>
                             <div class="col-xl-6 col-md-6 col-sm-12 col-xs-12">
@@ -124,7 +121,7 @@
                                 <div class="form-group">
                                     <label for="reference" class="form-control-label">Select Reference <span class="text-danger">*</span></label>
                                     <select style="width:100%;" class="custom-select" id="reference" name="reference">
-                                        <option value="">Select reference</option>
+                                        <option value="">Select Reference</option>
                                         @foreach ($references as $reference)
                                             <option value="{{ $reference->id }}">{{ $reference->reference }}</option>
                                         @endforeach
@@ -236,7 +233,7 @@
     });
 
     $('.admin-grid-action-create').click(function(){
-        // resetFormData();
+        resetFormData();
         $('#news-modal-title').empty();
         $('#news-modal-title').append('<h5 class="news-modal-title" id="news-modal-title">Create News</h5>');
         $('#modal_submit').empty();
@@ -276,6 +273,21 @@
         }
         doAjaxImageUploadCall(doAjax_params_default);
     });*/
+
+    function resetFormData() {
+        $('#news_id').val('');
+        $('#title').val('');
+        $("#category").val('').trigger('change');
+        $('#tag').val('');
+        $('input[name="media_link"]').prop('checked', false);
+        $('#image_video').val('');
+        $('#youtube_link').val('');
+        $('#reference').val('');
+        $('#description').val('');
+
+        // To reset form validations
+        // $('#content-form').validate().resetForm();
+    }
 
 </script>
 @endpush
