@@ -16,6 +16,8 @@ class CreateNewsTable extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('category_id')->unsigned()->nullable();
+            $table->integer('reporter_id')->unsigned()->nullable();
+            $table->integer('reference_id')->unsigned()->nullable();
             $table->string('title');
             $table->string('tag')->nullable();
             $table->string('media')->nullable();
@@ -28,7 +30,6 @@ class CreateNewsTable extends Migration
             $table->boolean('display')->default(false);
             $table->boolean('isActive')->default(true);
             $table->boolean('isDeleted')->default(false);
-            $table->integer('reporter_id')->unsigned()->nullable();
             $table->date('news_date');
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
@@ -41,6 +42,10 @@ class CreateNewsTable extends Migration
             $table->foreign('reporter_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('set null');
+            $table->foreign('reference_id')
+                ->references('id')
+                ->on('reference')
                 ->onDelete('set null');
             $table->foreign('created_by')
                 ->references('id')

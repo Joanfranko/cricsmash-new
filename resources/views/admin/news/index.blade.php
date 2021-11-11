@@ -94,7 +94,7 @@
                                     <label for="media_link" class="form-control-label">Media Link <span class="text-danger">*</span></label>
                                     <div class="custom-controls-stacked">
                                         <label class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" name="media_link" value="Video/Image">
+                                            <input type="radio" class="custom-control-input" name="media_link" value="Video/Image" checked>
                                             <span class="custom-control-label">Video/Image</span>
                                         </label>
                                         <label class="custom-control custom-radio">
@@ -102,15 +102,16 @@
                                             <span class="custom-control-label">Youtube Link</span>
                                         </label>
                                     </div>
+                                    <label id="media_link-error" class="error" for="media_link"></label>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-md-6 col-sm-12 col-sm-12">
+                            <div class="col-xl-6 col-md-6 col-sm-12 col-sm-12 ImageVideo">
                                 <div class="form-group">
                                     <label for="image_video" class="form-control-label">Image / Video <span class="text-danger">*</span></label>
                                     <input type="file" class="form-control" name="image_video" id="image_video" />
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-xl-6 col-md-6 col-sm-12 col-xs-12 YoutubeLink">
                                 <div class="form-group">
                                     <label for="youtube_link" class="form-control-label">Youtube Link <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="youtube_link" id="youtube_link" />
@@ -123,10 +124,22 @@
                                     <select style="width:100%;" class="custom-select" id="reference" name="reference">
                                         <option value="">Select Reference</option>
                                         @foreach ($references as $reference)
-                                            <option value="{{ $reference->id }}">{{ $reference->reference }}</option>
+                                            <option value="{{ $reference->id }}">{{ $reference->name }}</option>
                                         @endforeach
                                     </select>
                                     <label id="reference-error" class="error" for="reference"></label>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-sm-12 col-sm-12">
+                                <div class="form-group m-0">
+                                    <label for="isActive" class="form-control-label">Status</label>
+                                    <div class="custom-controls-stacked" style="padding-top: 10px;">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="isActive" id="isActive" />
+                                            <span class="custom-control-label">Yes</span>
+                                            <label id="isActive-error" class="error" for="isActive"></label>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-xl-12 col-md-12 col-sm-12 col-sm-12">
@@ -179,6 +192,19 @@
         // InitFormValidation();
 
         $('#description').ckeditor();
+
+        $('input[type=radio][name="media_link"]').change(function() {
+            if (this.value == 'Video/Image') {
+                $('#youtube_link').val('');
+                $('.ImageVideo').show();
+                $('.YoutubeLink').hide();
+            }
+            else if (this.value == 'Youtube Link') {
+                $('#image_video').val('');
+                $('.YoutubeLink').show();
+                $('.ImageVideo').hide();
+            }
+        });
     });
 
     var BindDataToDataGrid = {
@@ -205,7 +231,7 @@
                     @endif
                 ],
                 columnDefs : [{
-                    targets: 5,
+                    targets: 6,
                     title: "Actions",
                     orderable: !1,
                     render: function(a, e, t, n) {
@@ -214,7 +240,7 @@
                     }
                 },
                 {
-                    targets: 4,
+                    targets: 5,
                     render: function(a, e, t, n){
                         return (t.isActive == 1) ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Inactive</span>';
                     }
@@ -244,49 +270,141 @@
         $('#news-modal').modal('hide');
     });
 
-    /*$('#modal_submit').click(function() {
-        if(!$('#category-form').valid()) {
+    $('#modal_submit').click(function() {
+        if(!$('#news-form').valid()) {
             return false;
         }
 
-        var formData = new FormData($('#category-form')[0]);
+        var formData = new FormData($('#news-form')[0]);
+        formData.append('description', CKEDITOR.instances['description'].getData());
         var doAjax_params_default = {};
-        if($('#category_id').val() != '') {
+        if($('#news_id').val() != '') {
             doAjax_params_default = {
-                'url': '{{ url('admin/category') }}' + '/update/' + $('#category_id').val(),
+                'url': '{{ url('admin/news') }}' + '/update/' + $('#news_id').val(),
                 'requestType': 'POST',
                 'data': formData,
-                'successCallbackFunction': 'updateCategory',
+                'successCallbackFunction': 'updateNews',
                 'contentType': false,
                 'processData': false,
             }
         } else {
             doAjax_params_default = {
-                'url': '{{ route('admin.category.create') }}',
+                'url': '{{ route('admin.news.create') }}',
                 'requestType': 'POST',
                 'data': formData,
-                'successCallbackFunction': 'createCategory',
-                'errorCallBackFunction': 'CategoryCreateError',
+                'successCallbackFunction': 'createNews',
                 'contentType': false,
                 'processData': false,
             }
         }
         doAjaxImageUploadCall(doAjax_params_default);
-    });*/
+    });
+
+    function createNews(status, data, message) {
+        if(!status) {
+            ShowValidationErrorOnModal(data);
+            return false;
+        }
+        $('#news-modal').modal('hide');
+        showAlert('success', title = 'Success', 'News Created Successfully..!');
+        $('#DataGrid').dataTable().api().ajax.reload();
+    }
+
+    function editRecord(id) {
+        resetFormData();
+        $('#news-modal-title').empty();
+        $('#news-modal-title').append('<h5 class="news-modal-title" id="news-modal-title">Edit News</h5>');
+        $('#modal_submit').empty();
+        $('#modal_submit').append('Update News');
+        var doAjax_params_default = {
+            'url': '{{ url('admin/news') }}' + '/edit/' + id,
+            'requestType': "GET",
+            'successCallbackFunction': 'fillNewsData'
+        };
+        doAjaxCall(doAjax_params_default);
+    }
+
+    function fillNewsData(status, data, message) {
+        if(!status) {
+            showAlert('warning', title = 'Warning', (message.length > 0 ? message : 'Some error occured!'));
+            return false;
+        }
+        setFormData(data);
+        $("#news-modal-title h5").text("Edit News");
+        $('#news-modal').modal('show');
+    }
+
+    function updateNews (status, data, message) {
+        if(!status) {
+            ShowValidationErrorOnModal(data);
+            return false;
+        }
+        $('#news-modal').modal('hide');
+        showAlert('success', title = 'Success', 'News Updated Successfully..!');
+        $('#DataGrid').dataTable().api().ajax.reload();
+    }
+
+    function deleteRecord(id){        
+        getConfirmation('warning', 'Delete?', 'Are you sure you want to delete this?', 'confirmedDeleteAction', id);
+    }
+
+    function confirmedDeleteAction(id) {
+        var doAjax_params_default = {
+            'url': '{{ url('admin/news/') }}' + '/delete/' + id,
+            'requestType': "DELETE",
+            'successCallbackFunction': 'deleteNews'
+        }
+        doAjaxCall(doAjax_params_default);
+    }
+
+    function deleteNews(status, data, message) {
+        if(!status) {
+            showAlert('warning', title = 'Warning', (message.length > 0 ? message : 'Some error occured'));
+            return false;
+        }
+        showAlert('success', title = 'Success', 'News Deleted Successfully..!');
+        $('#DataGrid').dataTable().api().ajax.reload();
+    }
+
+    function setFormData(data) {
+        $('#news_id').val(data.id);
+        $('#title').val(data.title);
+        $('#tag').val(data.tag);
+        $("input[name='media_link'][value='"+ data.media_link +"']").prop('checked', 'checked');
+        if(data.media) {
+            // $('#image_video').val(data.media);
+            $('.YoutubeLink').hide();
+            $('.ImageVideo').show();
+        }
+        if(data.thumbnail) {
+            $('#youtube_link').val(data.thumbnail);
+            $('.YoutubeLink').show();
+            $('.ImageVideo').hide();
+        }
+        $('#reference').val(data.reference_id);
+        $('#category').val(data.category_id);
+        $('#description').val(data.description);
+        if(data.isActive == 1) {
+            $('#isActive').prop("checked", true);
+        }
+    }
 
     function resetFormData() {
         $('#news_id').val('');
         $('#title').val('');
-        $("#category").val('').trigger('change');
         $('#tag').val('');
         $('input[name="media_link"]').prop('checked', false);
         $('#image_video').val('');
         $('#youtube_link').val('');
         $('#reference').val('');
+        $('#category').val('');
         $('#description').val('');
+        $('input[type=checkbox]').prop('checked',false);
+        $('.YoutubeLink').show();
+        $('.ImageVideo').show();
 
         // To reset form validations
-        // $('#content-form').validate().resetForm();
+        $('#news-form').validate().resetForm();
     }
 
 </script>

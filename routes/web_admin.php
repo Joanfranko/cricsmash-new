@@ -58,6 +58,10 @@ Route::group(['middleware' => ['role_or_permission:SuperAdmin|Creator|Category.R
     // Routes for News
     Route::get('admin/news/', [App\Http\Controllers\Admin\NewsController::class, 'index'])->name('news');
     Route::get('admin/news/list', [App\Http\Controllers\Admin\NewsController::class, 'list'])->name('news.list');
+    Route::post('admin/news/create', [App\Http\Controllers\Admin\NewsController::class, 'create'])->name('news.create');
+    Route::get('admin/news/edit/{id}', [App\Http\Controllers\Admin\NewsController::class, 'edit'])->name('news.edit');
+    Route::post('admin/news/update/{id}', [App\Http\Controllers\Admin\NewsController::class, 'update'])->name('news.update');
+    Route::delete('admin/news/delete/{id}', [App\Http\Controllers\Admin\NewsController::class, 'delete'])->name('news.delete');
 
     // Routes for Notifications
     Route::get('admin/notification', [App\Http\Controllers\Admin\NotificationController::class, 'index'])->name('notification');
