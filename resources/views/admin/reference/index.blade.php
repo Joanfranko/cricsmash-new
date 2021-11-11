@@ -247,7 +247,7 @@
             showAlert('warning', title = 'Warning', (message.length > 0 ? message : 'Some error occured'));
             return false;
         }
-        showAlert('success', title = 'Success', 'Role Deleted Successfully..!');
+        showAlert('success', title = 'Success', 'Reference Deleted Successfully..!');
         $('#DataGrid').dataTable().api().ajax.reload();
     }
 
