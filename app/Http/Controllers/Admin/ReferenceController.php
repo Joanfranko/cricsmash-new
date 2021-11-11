@@ -28,7 +28,7 @@ class ReferenceController extends BaseController
     }
 
     public function list(Request $request) {
-        $news = Reference::select('id', 'reference', 'short_name', 'isActive', 'isDeleted', 'created_by', 'updated_by', 'created_at', 'updated_at')
+        $news = Reference::select('id', 'name', 'short_name', 'isActive', 'isDeleted', 'created_by', 'updated_by', 'created_at', 'updated_at')
             ->orderBy('created_at', 'desc');
             
         return DataTables::of($news)
@@ -43,7 +43,7 @@ class ReferenceController extends BaseController
 
         $reference = new Reference;
         
-        $reference->reference = $request->reference;
+        $reference->name = $request->name;
         $reference->short_name = $request->short_name;
         $reference->isActive = $request->isActive;
         $reference->created_by = Auth::id();
@@ -73,7 +73,7 @@ class ReferenceController extends BaseController
 
         $reference = Reference::find($id);
         
-        $reference->reference = $request->reference;
+        $reference->name = $request->name;
         $reference->short_name = $request->short_name;
         $reference->isActive = $request->isActive;
         $reference->updated_by = Auth::id();
@@ -88,11 +88,17 @@ class ReferenceController extends BaseController
 
     public function delete($id) {
         $reference = Reference::find($id);
-        $reference->delete();
+        
+        if($reference->news == null && $reference->news == '') {
+            $reference->delete();
+            $response['status'] = true;
+            $response['message'] = '';
+            $respone['data'] = null;
+            return response()->json($response, 200);
+        }
 
-        $response['status'] = true;
-        $response['message'] = '';
-        $respone['data'] = null;
+        $response['status'] = false;
+        $response['message'] = 'Reference is used in News, Could not delete this reference!';
         return response()->json($response, 200);
     }
 
@@ -108,8 +114,8 @@ class ReferenceController extends BaseController
         ]);
         array_push($columnList, (object)[
             'displayName' => 'Image Reference / Copyright'
-            , 'selectColumnName' => 'reference'
-            , 'columnName' => 'reference'
+            , 'selectColumnName' => 'name'
+            , 'columnName' => 'name'
             , 'className' => ''
             , 'orderable' => true
             , 'searchable' => true

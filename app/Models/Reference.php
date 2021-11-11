@@ -12,7 +12,7 @@ class Reference extends Model
     protected $table = 'reference';
 
     protected $fillable = [
-        'reference',
+        'name',
         'short_name',
         'isActive',
         'isDeleted',
@@ -30,7 +30,11 @@ class Reference extends Model
     ];
     
     public static $ReferenceValidation = [
-        'reference' => 'required|string|min:3',
+        'name' => 'required|string|min:3',
         'short_name' => 'required|string|min:3'
     ];
+
+    public function news() {
+        return $this->hasMany(News::class, 'reference_id', 'id');
+    }
 }

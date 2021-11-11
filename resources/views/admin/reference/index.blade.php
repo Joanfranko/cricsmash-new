@@ -65,9 +65,9 @@
                         <div class="row">
                             <div class="col-xl-12 col-md-12 col-sm-12 col-sm-12">
                                 <div class="form-group">
-                                    <label for="reference" class="form-control-label">Reference <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="reference" id="reference" />
-                                    <label id="reference-error" class="error" for="reference"></label>
+                                    <label for="name" class="form-control-label">Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="name" id="name" />
+                                    <label id="name-error" class="error" for="name"></label>
                                 </div>
                             </div>
                             <div class="col-xl-12 col-md-12 col-sm-12 col-sm-12">
@@ -247,7 +247,7 @@
             showAlert('warning', title = 'Warning', (message.length > 0 ? message : 'Some error occured'));
             return false;
         }
-        showAlert('success', title = 'Success', 'Reference Deleted Successfully..!');
+        showAlert('success', title = 'Success', message);
         $('#DataGrid').dataTable().api().ajax.reload();
     }
 
@@ -283,7 +283,7 @@
 
     function resetFormData() {
         $('#reference_id').val('');
-        $('#reference').val('');
+        $('#name').val('');
         $('#short_name').val('');
         $('input[type=checkbox]').prop('checked',false);
 
@@ -293,7 +293,7 @@
 
     function setFormData(data) {
         $('#reference_id').val(data.id);
-        $('#reference').val(data.reference);
+        $('#name').val(data.name);
         $('#short_name').val(data.short_name);
         if(data.isActive == 1) {
             $('#isActive').prop("checked", true);
@@ -301,7 +301,7 @@
     }
 
     function getFormData() {
-        var data = { reference_id: $('#reference_id').val(), reference: $('#reference').val(), 
+        var data = { reference_id: $('#reference_id').val(), name: $('#name').val(), 
         short_name: $('#short_name').val(), isActive: $('#isActive').is(':checked') ? 1 : 0 }
         return data; 
     }

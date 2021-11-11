@@ -15,7 +15,7 @@ class CreateReferenceTable extends Migration
     {
         Schema::create('reference', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('reference');
+            $table->string('name');
             $table->string('short_name');
             $table->boolean('isActive')->default(true);
             $table->boolean('isDeleted')->default(false);
