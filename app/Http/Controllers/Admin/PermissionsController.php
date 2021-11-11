@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Module;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Models\Permission;
 use Auth;
 use Carbon\Carbon;
 use Helper;
+use Illuminate\Support\Facades\DB;
 
 class PermissionsController extends BaseController
 {
@@ -36,19 +38,24 @@ class PermissionsController extends BaseController
             ->make(true);
     }
 
-    public function create(Request $request) {
+    /*public function create(Request $request) {
         // validation for common request
         $rules = Permission::$PermissionValidation;
         Helper::validateUserRequest($request, $rules);
 
-        $permission = new Permission;
-        
-        $permission->name = str_replace(' ', '', $request->name);
-        $permission->display_name = $request->name;
-        $permission->guard_name = 'web';        
-        $permission->created_at = Carbon::now('Asia/Kolkata');
-        $permission->updated_at = Carbon::now('Asia/Kolkata');
-        $permission->save();
+        $modules = Module::where([['isActive', '=', 1]])
+                    ->get();
+        // TODO: Edit have to work with modules permissions
+        $permission = new Permission();
+        foreach($modules as $module) {
+            $permission->name = str_replace(' ', '', $module->name.'.'.$request->name);
+            $permission->display_name = $module->name.' '.$request->name;
+            $permission->guard_name = 'web';        
+            $permission->created_at = Carbon::now('Asia/Kolkata');
+            $permission->updated_at = null;
+            $modulePermissions[] = $permission->attributesToArray();
+        }
+        Permission::insert($modulePermissions);
 
         $response['status'] = true;
         $response['data'] = $permission;
@@ -71,8 +78,9 @@ class PermissionsController extends BaseController
         Helper::validateUserRequest($request, $rules);
 
         $permission = Permission::find($id);
-        
-        $permission->name = str_replace(' ', '', $request->name);
+        $permission = Permission::where([['name', 'like' , $permission->name .'%']])->get();
+        dd($permission);
+        // $permission->name = str_replace(' ', '', $request->name); //To avoid change the name of the permission
         $permission->display_name = $request->name;
         $permission->guard_name = 'web';
         $permission->updated_at = Carbon::now('Asia/Kolkata');
@@ -92,7 +100,7 @@ class PermissionsController extends BaseController
         $response['message'] = '';
         $respone['data'] = null;
         return response()->json($response, 200);
-    }
+    }*/
 
     private function getDatatableColumnList(){
         $columnList = [];
@@ -127,14 +135,6 @@ class PermissionsController extends BaseController
             , 'className' => 'text-center'
             , 'orderable' => false
             , 'searchable' => true
-        ]);
-        array_push($columnList, (object) [
-            'displayName' => 'Action'
-            , 'selectColumnName' => 'action'
-            , 'columnName' => 'action'
-            , 'className' => 'text-center'
-            , 'orderable' => false
-            , 'searchable' => false
         ]);
 
         return $columnList;

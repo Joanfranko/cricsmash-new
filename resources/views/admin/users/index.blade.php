@@ -72,10 +72,10 @@
                             </div>
                             <div class="col-xl-12 col-md-12 col-sm-12 col-sm-12">
                                 <div class="form-group">
-                                    <label for="permission" class="form-control-label">Select Permission <span class="text-danger">*</span></label>
-                                    <select style="width:100%;" class="custom-select" id="permission" name="permission[]" multiple>
+                                    <label for="role" class="form-control-label">Select Role <span class="text-danger">*</span></label>
+                                    <select style="width:100%;" class="custom-select" id="role" name="role[]" multiple>
                                     </select>
-                                    <label id="permission-error" class="error" for="permission"></label>
+                                    <label id="role-error" class="error" for="role"></label>
                                 </div>
                             </div>
                         </div>
@@ -120,10 +120,10 @@
     });
 
     function RunSelect2(){
-        $('#permission').select2({
+        $('#role').select2({
             allowClear: true,
             closeOnSelect: false,
-            placeholder: "Select Permission",
+            placeholder: "Select Role",
         }).on('select2:open', function() {  
             setTimeout(function() {
                 $(".select2-results__option .select2-results__group").bind( "click", selectAlllickHandler ); 
@@ -133,7 +133,7 @@
 
     var selectAlllickHandler = function() {
         $(".select2-results__option .select2-results__group").unbind( "click", selectAlllickHandler );        
-        $('#permission').select2('destroy').find('option').prop('selected', 'selected').end();
+        $('#role').select2('destroy').find('option').prop('selected', 'selected').end();
         RunSelect2();
     };
 
@@ -165,7 +165,7 @@
                     title: "Actions",
                     orderable: !1,
                     render: function(a, e, t, n) {
-                        return (t.role_id != 1) ? '<button type="button" title="Grant Permission" onclick="givePermission(' + t.id + ')" class="btn btn-icon btn-warning btn-sm p-0"><i class="fa fa-shield"></i></button> ': '';
+                        return (t.role_id != 1) ? '<button type="button" title="Assign Role" onclick="giveRole(' + t.id + ')" class="btn btn-icon btn-warning btn-sm p-0"><i class="fa fa-shield"></i></button> ': '';
                     }
                 },
                 {
@@ -197,7 +197,7 @@
         var doAjax_params_default = {};
         if($('#user_id').val() != '') {
             doAjax_params_default = {
-                'url': '{{ url('admin/user/permission') }}' + '/create/' + $('#user_id').val(),
+                'url': '{{ url('admin/user/role') }}' + '/create/' + $('#user_id').val(),
                 'requestType': 'POST',
                 'data': getFormData(),
                 'successCallbackFunction': 'updateRole',
@@ -212,16 +212,16 @@
             return false;
         }
         $('#users-modal').modal('hide');
-        showAlert('success', title = 'Success', 'Permissions Granted Successfully..!');
+        showAlert('success', title = 'Success', 'Roles Assigned Successfully..!');
         $('#DataGrid').dataTable().api().ajax.reload();
     }
 
-    function givePermission(id) {
+    function giveRole(id) {
         resetFormData();
         $('#users-modal-title').empty();
-        $('#users-modal-title').append('<h5 class="users-modal-title" id="roles-modal-title">Grant Permission</h5>');
+        $('#users-modal-title').append('<h5 class="users-modal-title" id="roles-modal-title">Assign Role</h5>');
         $('#modal_submit').empty();
-        $('#modal_submit').append('Grant Permission');
+        $('#modal_submit').append('Assign Role');
         var doAjax_params_default = {
             'url': '{{ url('admin/user') }}' + '/edit/' + id,
             'requestType': "GET",
@@ -236,28 +236,28 @@
             return false;
         }
         var doAjax_params_default = {
-            'url': '{{ url('admin/user') }}' + '/permission/' + data.id,
+            'url': '{{ url('admin/user') }}' + '/role/' + data.id,
             'requestType': "GET",
             'successCallbackFunction': 'bindDropdownList',
         }
         doAjaxCall(doAjax_params_default);
         setFormData(data);
-        $("#modal-title h5").text("Grant Permission");
+        $("#modal-title h5").text("Assign Role");
         $('#users-modal').modal('show');
     }
 
     function bindDropdownList(status, data, message, responseObj) {
-        var selectedVal = (responseObj && responseObj.userPermissions) ? responseObj.userPermissions : '';
+        var selectedVal = (responseObj && responseObj.userRoles) ? responseObj.userRoles : '';
         if(status) {
-            bindPermissionsList(status, data, message);
-            if(responseObj.userPermissions) {
-                $("#permission").val(responseObj.userPermissions).trigger('change');
+            bindRolesList(status, data, message);
+            if(responseObj.userRoles) {
+                $("#role").val(responseObj.userRoles).trigger('change');
             }
         }
     }
 
-    function bindPermissionsList(status, data, message) {
-        $('#permission').empty();
+    function bindRolesList(status, data, message) {
+        $('#role').empty();
         if(status && data != null && data != '') {
             var options = '';
             options += '<optgroup label="Select All">';
@@ -266,13 +266,13 @@
             });
             options += '</optgroup>';
         }
-        $('select[name="permission[]"]').append(options);
+        $('select[name="role[]"]').append(options);
     }
 
     function resetFormData() {
         $('#user_id').val('');
         $('#name').val('');
-        $('#permission').val('');
+        $('#role').val('');
 
         // To reset form validations
         $('#users-form').validate().resetForm();
@@ -281,11 +281,10 @@
     function setFormData(data) {
         $('#user_id').val(data.id);
         $('#name').val(data.name);
-        // $("#permission").val(data.permissions).trigger('change');
     }
 
     function getFormData() {
-        var data = { user_id: $('#user_id').val(), permission: $('#permission').val() }
+        var data = { user_id: $('#user_id').val(), role: $('#role').val() }
         return data; 
     }
 

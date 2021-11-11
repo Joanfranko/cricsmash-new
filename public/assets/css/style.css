@@ -24883,3 +24883,8 @@ body.search-show, body.sidebar-show {
 .error {
 	color: #a6121f;
 }
+
+.permission-checkbox {
+	/* text-align: center; */
+	margin-top: -25px;
+}

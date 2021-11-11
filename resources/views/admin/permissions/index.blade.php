@@ -18,9 +18,6 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">{{ $moduleName }}</div>
-                    <div class="card-options">
-                        <button type="button" class="admin-grid-action-create btn btn-outline-primary"><i class="fe fe-plus mr-2"></i> Add</button>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -144,15 +141,7 @@
                     @include('admin.components.datatable-render-columns', $AdminData['datatableData']['columnList'])
                     @endif
                 ],
-                columnDefs : [{
-                    targets: 4,
-                    title: "Actions",
-                    orderable: !1,
-                    render: function(a, e, t, n) {
-                        return '<button type="button" title="Edit" onclick="editRecord(' + t.id + ')" class="btn btn-icon btn-warning btn-sm p-0"><i class="fa fa-edit"></i></button> ' +
-                            '<button type="button" id="btn_delete" title="Delete" onclick="deleteRecord(' + t.id + ')" class="btn btn-icon btn-danger btn-sm p-0"><i class="fa fa-trash"></i></button>';
-                    }
-                }],
+                columnDefs : [],
                 bDestroy: true,
                 buttons: [
                     'copy', 'excel', 'pdf'
@@ -165,7 +154,7 @@
         BindDataToDataGrid.init();
     });
 
-    $('.admin-grid-action-create').click(function(){
+    /*$('.admin-grid-action-create').click(function(){
         resetFormData();
         $('#permissions-modal-title').empty();
         $('#permissions-modal-title').append('<h5 class="permissions-modal-title" id="permissions-modal-title">Create Permission</h5>');
@@ -281,7 +270,7 @@
     function getFormData() {
         var data = { permission_id: $('#permission_id').val(), name: $('#name').val() }
         return data; 
-    }
+    }*/
 
 </script>
 @endpush

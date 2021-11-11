@@ -8,7 +8,8 @@ use App\Models\User;
 use Yajra\DataTables\DataTables;
 use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
-use App\Models\ModelHasPermission;
+use App\Models\ModelHasRole;
+use App\Models\Role;
 
 class UserManagementController extends BaseController
 {
@@ -40,8 +41,8 @@ class UserManagementController extends BaseController
         $user = User::find($id);
 
         // $users = User::get();
-        $permissions = $user->getAllPermissions();
-        $user->userPermissions = $permissions->pluck('id');
+        $roles = $user->roles();
+        $user->userRoles = $roles->pluck('id');
         
         $response['status'] = true;
         $response['data'] = $user;
@@ -49,20 +50,23 @@ class UserManagementController extends BaseController
         return response()->json($response, 200);
     }
 
-    public function givePermission(Request $request, $id) {
-        if($request->permission != null && $request->permission != '') {
-            DB::table('model_has_permissions')->where('model_id', $id)->delete();
-            $insertUserPermissions = [];
-            foreach($request->permission as $permission) {
-                $modalPermission = new ModelHasPermission;
-                $modalPermission->permission_id = $permission;
-                $modalPermission->model_type = 'App\Models\User';
-                $modalPermission->model_id = $id;
-                $insertUserPermissions[] = $modalPermission->attributesToArray();
+    public function assignRoles(Request $request, $id) {
+        if($request->role != null && $request->role != '') {
+            DB::table('model_has_roles')->where('model_id', $id)->delete();
+            $insertUserRoles = [];
+            foreach($request->role as $role) {
+                $modalRole = new ModelHasRole;
+                $modalRole->role_id = $role;
+                $modalRole->model_type = 'App\Models\User';
+                $modalRole->model_id = $id; // user id
+                $insertUserRoles[] = $modalRole->attributesToArray();
             }
-            ModelHasPermission::insert($insertUserPermissions);
+            ModelHasRole::insert($insertUserRoles);
+            
+            // To remove permission cache
+            app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
         } else {
-            DB::table('model_has_permissions')->where('model_id', $id)->delete();
+            DB::table('model_has_roles')->where('model_id', $id)->delete();
         }
         $response['status'] = true;
         $response['data'] = '';
@@ -70,20 +74,20 @@ class UserManagementController extends BaseController
         return response()->json($response, 200);
     }
 
-    public function userPermissions(Request $request, $id) {
+    public function userRoles(Request $request, $id) {
         // Permissions List
-        $permissionsList = Permission::orderBy('created_at', 'desc')
+        $rolesList = Role::orderBy('created_at', 'desc')
             ->get()->toArray();
         
         // User Permissions
-        $user = User::find($id);
-        $permissions = $user->getAllPermissions()->pluck('id');
-        $userPermissionsList = $permissions;
+        $user = User::with('roles')->find($id);
+        $roles = $user->roles()->pluck('id');
+        $userRolesList = $roles;
 
         $response['status'] = true;
-        $response['data'] = $permissionsList;
+        $response['data'] = $rolesList;
         $response['message'] = 'Permissions List';
-        $response['userPermissions'] = $userPermissionsList;
+        $response['userRoles'] = $userRolesList;
         return response()->json($response, 200);
     }
 

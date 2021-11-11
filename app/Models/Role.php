@@ -26,7 +26,11 @@ class Role extends Model
         'updated_at' => 'datetime:d M Y H:i:s A'
     ];
 
-    public static $RoleValidation = [
-        'name' => 'required|string|min:3'
+    public static $RoleCreateValidation = [
+        'name' => 'required|string|min:3|unique:roles,display_name'
+    ];
+
+    public static $RoleUpdateValidation = [
+        'name' => 'required|string|min:3|unique:roles'
     ];
 }

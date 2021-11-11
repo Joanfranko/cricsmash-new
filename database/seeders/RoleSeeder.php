@@ -17,11 +17,11 @@ class RoleSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('roles')->truncate();
-        DB::table('permissions')->truncate();
-        DB::table('role_has_permissions')->truncate();
         DB::table('model_has_roles')->truncate();
+        /*DB::table('permissions')->truncate();
+        DB::table('role_has_permissions')->truncate();
         DB::table('model_has_permissions')->truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');*/
         
         /* Roles */
         DB::table('roles')->insert([
@@ -42,56 +42,38 @@ class RoleSeeder extends Seeder
             'guard_name' => 'web',
             'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
-        DB::table('roles')->insert([
-            'name' => 'ViewCategory',
-            'display_name' => 'View Category',
-            'guard_name' => 'web',
-            'created_at'=>Carbon::now('Asia/Kolkata')
-        ]);
-        DB::table('roles')->insert([
-            'name' => 'CreateCategory',
-            'display_name' => 'Create Category',
-            'guard_name' => 'web',
-            'created_at'=>Carbon::now('Asia/Kolkata')
-        ]);
-        DB::table('roles')->insert([
-            'name' => 'EditCategory',
-            'display_name' => 'Edit Category',
-            'guard_name' => 'web',
-            'created_at'=>Carbon::now('Asia/Kolkata')
-        ]);
-        DB::table('roles')->insert([
-            'name' => 'DeleteCategory',
-            'display_name' => 'Delete Category',
-            'guard_name' => 'web',
-            'created_at'=>Carbon::now('Asia/Kolkata')
-        ]);
 
         /* Permissions */
-        DB::table('permissions')->insert([
-            'name' => 'ViewCategory',
-            'display_name' => 'View Category',
+        /*DB::table('permissions')->insert([
+            'name' => 'Read',
+            'display_name' => 'Read',
             'guard_name' => 'web',
             'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
         DB::table('permissions')->insert([
-            'name' => 'CreateCategory',
-            'display_name' => 'Create Category',
+            'name' => 'Write',
+            'display_name' => 'Write',
             'guard_name' => 'web',
             'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
         DB::table('permissions')->insert([
-            'name' => 'EditCategory',
-            'display_name' => 'Edit Category',
+            'name' => 'Update',
+            'display_name' => 'Update',
             'guard_name' => 'web',
             'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
         DB::table('permissions')->insert([
-            'name' => 'DeleteCategory',
-            'display_name' => 'Delete Category',
+            'name' => 'Delete',
+            'display_name' => 'Delete',
             'guard_name' => 'web',
             'created_at'=>Carbon::now('Asia/Kolkata')
         ]);
+        DB::table('permissions')->insert([
+            'name' => 'Export',
+            'display_name' => 'Export',
+            'guard_name' => 'web',
+            'created_at'=>Carbon::now('Asia/Kolkata')
+        ]);*/
 
         /* Role has Permissions */
         /*DB::table('role_has_permissions')->insert([
@@ -109,24 +91,6 @@ class RoleSeeder extends Seeder
             'role_id' => '2',
             'model_type' => 'App\Models\User',
             'model_id'=> '2'
-        ]);
-        DB::table('model_has_roles')->insert([
-            'role_id' => '4',
-            'model_type' => 'App\Models\User',
-            'model_id'=> '2'
-        ]);
-
-        /* Role has permissions */
-        
-        DB::table('model_has_permissions')->insert([
-            'permission_id' => 1,
-            'model_type' => 'App\Models\User',
-            'model_id'=> 2,
-        ]);
-        DB::table('model_has_permissions')->insert([
-            'permission_id' => 3,
-            'model_type' => 'App\Models\User',
-            'model_id'=> 2,
         ]);
     }
 }
