@@ -32,7 +32,7 @@ Route::group(['middleware' => ['role:SuperAdmin']], function () {
 });
 
 // Routes for category
-Route::group(['middleware' => ['role_or_permission:Creator|Category.Read']], function () {
+Route::group(['middleware' => ['role_or_permission:SuperAdmin|Creator|Category.Read']], function () {
     Route::get('/admin/category', [App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('category');
     Route::get('/admin/category/list', [App\Http\Controllers\Admin\CategoryController::class, 'list'])->name('category.list');
 });
@@ -59,4 +59,11 @@ Route::group(['middleware' => ['role_or_permission:Creator|Category.Read']], fun
     Route::get('admin/news/', [App\Http\Controllers\Admin\NewsController::class, 'index'])->name('news');
     Route::get('admin/news/list', [App\Http\Controllers\Admin\NewsController::class, 'list'])->name('news.list');
 
+    // Routes for Notifications
+    Route::get('admin/notification', [App\Http\Controllers\Admin\NotificationController::class, 'index'])->name('notification');
+    Route::get('admin/notification/list', [App\Http\Controllers\Admin\NotificationController::class, 'list'])->name('notification.list');
+    Route::post('admin/notification/create', [App\Http\Controllers\Admin\NotificationController::class, 'create'])->name('notification.create');
+    Route::get('admin/notification/edit/{id}', [App\Http\Controllers\Admin\NotificationController::class, 'edit'])->name('notification.edit');
+    Route::put('admin/notification/update/{id}', [App\Http\Controllers\Admin\NotificationController::class, 'update'])->name('notification.update');
+    Route::delete('admin/notification/delete/{id}', [App\Http\Controllers\Admin\NotificationController::class, 'delete'])->name('notification.delete');
 ?>

@@ -12,6 +12,7 @@
                 <li aria-haspopup="true"><a href="{{ route('admin.category') }}" class="sub-icon @if(Route::current()->getName() == 'admin.category') active @endif"> Category </a></li>
                 <li aria-haspopup="true"><a href="{{ route('admin.news') }}" class="sub-icon @if(Route::current()->getName() == 'admin.news') active @endif"> News </a></li>
                 <li aria-haspopup="true"><a href="{{ route('admin.reference') }}" class="sub-icon @if(Route::current()->getName() == 'admin.reference') active @endif"> Reference </a></li>
+                <li aria-haspopup="true"><a href="{{ route('admin.notification') }}" class="sub-icon @if(Route::current()->getName() == 'admin.notification') active @endif"> Notification </a></li>
             </ul>
         </nav>
         <!--Nav end -->

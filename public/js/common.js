@@ -194,14 +194,21 @@ function ShowValidationErrorOnModal(data) {
             $('#' + data.inputerror[i] + '').parent().parent().addClass('has-error');
             if($('#' + data.inputerror[i] + '').prop('multiple')) {
                 $('#' + data.inputerror[i] + '').next().next().text('' + data.error_string[i] + '').css('display', 'block');
+            }  else if($('#' + data.inputerror[i] + '').prop('tagName') == 'TEXTAREA') {
+                $('#' + data.inputerror[i] + '').next().next().text('' + data.error_string[i] + '').css('display', 'block');
             } else {
                 $('#' + data.inputerror[i] + '').next().text('' + data.error_string[i] + '');
             }
             $('#' + data.inputerror[i] + '').next().show();
         } else {
             $('#' + data.inputerror[i] + '').parent().parent().removeClass('has-error');
-            $('#' + data.inputerror[i] + '').next().text('');
-            $('#' + data.inputerror[i] + '').next().hide();
+            if($('#' + data.inputerror[i] + '').prop('tagName') == 'TEXTAREA') {
+                $('#' + data.inputerror[i] + '').next().next().text('');
+                $('#' + data.inputerror[i] + '').next().next().hide();
+            } else {
+                $('#' + data.inputerror[i] + '').next().text('');
+                $('#' + data.inputerror[i] + '').next().hide();
+            }
         }
     }
 }
