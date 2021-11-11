@@ -257,7 +257,7 @@
             return false;
         }
         setFormData(data);
-        $("#modal-title h5").text("Edit Reference");
+        $("#reference-modal-title h5").text("Edit Reference");
         $('#reference-modal').modal('show');
     }
 
